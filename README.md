@@ -5,19 +5,33 @@
 ## Assets
 - GCP Account
 - Sysdig Acount
-
-- How to create a user with administration access
+- Instructions: How to create a user with administration access
 
 ## Automations
 
-- Install kubectl
+- Install local tooling
+  - Dependencies (jq gettext bash-completion moreutils)
+  - gcloud CLI + delete previous credentials (in case) + configure credentials
+  - kubectl
+  - helm
 - GKE
   - IaC provisioning
   - Deploy test workloads (helm)
   - Deploy Sysdig agents (helm)
 - GCR
-  - Cook and push sample images
-
+  - Create GCR registry, pull sample images and push them
 
 ## Content
+
+- Introduction
+- Install
+  - Cloud
+  - GKE
+  - GCR
+- Runtime threat detection
+  - Cloud
+  - GKE
+- Vulnerability management
+  - GKE Runtime insights
+  - GCR scan
 
