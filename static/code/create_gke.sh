@@ -9,6 +9,22 @@ mkdir -p $HOME/bin && mv ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/
 # git clone https://github.com/hashicorp/learn-terraform-provision-gke-cluster
 cd learn-terraform-provision-gke-cluster
 
+# find out gcp project id
+if [[ -z "${GCP_PROJECT_ID}" ]]; then
+  echo "export GCP_PROJECT_ID=$(gcloud config get-value project)"
+fi
+
+# patch tf files
+# change machine type
+sed -ie 's/n1-standard-1/n1-standard-4/g' gke.tf
+# change machine types for first instance type as well as the region
+sed -ie 's/us-central1/us-east1/g' terraform.tfvars
+# comment out terraform-cloud to set local terraform
+sed -ie '6,10 s/^/#/' terraform.tf 
+
+# deploy cluster
+terraform init && terraform apply -auto-approve
+
 # configure kubectl
 gcloud container clusteres get-credentials gkeworkshopk8s --region $GCP_REGION
 

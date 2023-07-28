@@ -7,18 +7,23 @@
 - Sysdig Acount
 
 ## Automations
+
+Automations are located in the folder `static/code`
+
 - [x] Dependencies (jq gettext bash-completion moreutils)
 - [x] gcloud CLI + delete previous credentials (in case) + configure credentials
 - [x] kubectl
 - [x] helm
-- GKE
+#### GKE
 - [ ] IaC provisioning
 - [ ] Deploy test workloads (helm)
 - [ ] Deploy Sysdig agents (helm)
-- GCR
+#### GCR
 - [x] Create GCR registry, pull sample images and push them
 
 ## Content
+
+Content is located in the folder `content`
 
 - [ ] Introduction
 - [ ] Install
