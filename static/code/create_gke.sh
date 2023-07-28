@@ -9,9 +9,13 @@ mkdir -p $HOME/bin && mv ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/
 # git clone https://github.com/hashicorp/learn-terraform-provision-gke-cluster
 cd learn-terraform-provision-gke-cluster
 
-# find out gcp project id
+# find out or define gcp project id
 if [[ -z "${GCP_PROJECT_ID}" ]]; then
   echo "export GCP_PROJECT_ID=$(gcloud config get-value project)"
+fi
+# find out or define gcp region
+if [[ -z "${GCP_REGION}" ]]; then
+  echo "export GCP_REGION=us-east1"
 fi
 
 # patch tf files

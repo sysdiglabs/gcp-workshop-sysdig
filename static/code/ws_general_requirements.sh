@@ -3,6 +3,7 @@
 # Uninstall gcloud cli
 curl https://sdk.cloud.google.com > install.sh
 bash install.sh --disable-prompts
+rm ./install.sh
 
 # Install jq command-line tool for parsing JSON, and bash-completion
 sudo yum -y install jq gettext bash-completion moreutils
@@ -18,6 +19,10 @@ do
 done
 
 # ToDo: Remove existing credentials if needed
+
+# Authenticate gcloud CLI
+gcloud auth login
+gcloud config set project gcp-sysdig-workshop
 
 # Set the ACCOUNT_ID and the region to work with our desired region
 export GCP_REGION=us-east1
@@ -38,7 +43,7 @@ gcloud services enable \
   containerscanning.googleapis.com
 
 # GCR Registry for module 2, create repository
-export GCR_NAME=GCP-workshop
+export GCR_NAME=gcp-sysdig-workshop
 
 repositories=( "$ECR_NAME" "mysql" "postgres" "redis" )
 
