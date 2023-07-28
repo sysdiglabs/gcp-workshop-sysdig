@@ -5,6 +5,8 @@
 ## Assets
 - GCP Account with administrator access
 - Sysdig Acount
+
+## Automations
 - [x] Dependencies (jq gettext bash-completion moreutils)
 - [x] gcloud CLI + delete previous credentials (in case) + configure credentials
 - [x] kubectl
