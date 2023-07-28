@@ -15,9 +15,8 @@ Automations are located in the folder `static/code`
 - [x] kubectl
 - [x] helm
 #### GKE
-- [ ] IaC provisioning
-- [ ] Deploy test workloads (helm)
-- [ ] Deploy Sysdig agents (helm)
+- [x] IaC provisioning
+- [x] Deploy test workloads (helm)
 #### GCR
 - [x] Create GCR registry, pull sample images and push them
 
