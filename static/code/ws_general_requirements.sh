@@ -1,12 +1,18 @@
 #!/bin/bash
 
 # Uninstall gcloud cli
-curl https://sdk.cloud.google.com > install.sh
-bash install.sh --disable-prompts
-rm ./install.sh
+if which gcloud >/dev/null; then
+  echo "gcloud already installed"
+else
+  echo "gcloud not present, installing it"
+  curl https://sdk.cloud.google.com > install.sh
+  bash install.sh --disable-prompts
+  rm ./install.sh
+fi
 
 # Install jq command-line tool for parsing JSON, and bash-completion
-sudo yum -y install jq gettext bash-completion moreutils
+sudo apt-get update
+sudo apt-get -y install jq gettext bash-completion moreutils
 
 # install helm
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3

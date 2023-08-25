@@ -2,6 +2,9 @@
 
 ## Prerequisites
 
+## Launch workshop automations
+Read static/code/bootstrap_prereq.md
+
 ## Assets
 - GCP Account with administrator access
 - Sysdig Acount
