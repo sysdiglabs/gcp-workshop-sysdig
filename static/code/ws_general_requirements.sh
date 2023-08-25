@@ -51,7 +51,8 @@ gcloud services enable \
 # GCR Registry for module 2, create repository
 export GCR_NAME=gcp-sysdig-workshop
 
-repositories=( "$ECR_NAME" "mysql" "postgres" "redis" )
+declare -a repositories
+repositories=( "$GCR_NAME" "mysql" "postgres" "redis" )
 
 for repo in ${repositories[@]}; do
     gcloud artifacts repositories create ${repo} --repository-format=docker \
