@@ -30,7 +30,8 @@ sed -ie '6,10 s/^/#/' terraform.tf
 terraform init && terraform apply -auto-approve
 
 # configure kubectl
-gcloud container clusteres get-credentials gkeworkshopk8s --region $GCP_REGION
+# gcloud container clusteres get-credentials gkeworkshopk8s --region $GCP_REGION
+gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)
 
 # Kubectl shell completion
 cat << EOF > /root/.kube/completion.bash.inc
