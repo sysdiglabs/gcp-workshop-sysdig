@@ -10,6 +10,11 @@ else
   rm ./install.sh
 fi
 
+#Add terraform repository
+echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+sudo tee /etc/apt/sources.list.d/hashicorp.list
+
 # Install jq command-line tool for parsing JSON, and bash-completion
 sudo apt-get update
 sudo apt-get -y install jq gettext bash-completion moreutils terraform
