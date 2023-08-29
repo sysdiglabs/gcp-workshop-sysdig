@@ -10,9 +10,13 @@ else
   rm ./install.sh
 fi
 
+# Update gcloud-docker
+gcloud components update
+gcloud components install  docker-credential-gcr
+
 # Install jq command-line tool for parsing JSON, and bash-completion
 sudo apt-get update
-sudo apt-get -y install jq gettext bash-completion moreutils
+sudo apt-get -y install jq gettext bash-completion moreutils docker-ce docker-ce-cli
 
 # install helm
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -30,7 +34,7 @@ done
 # gcloud auth login # <- Not required as the prerequisite is to have a service-account initialized
 gcloud auth activate-service-account --project=$GCP_PROJECT_ID --key-file=gcpsrvaccountkey.json
 gcloud auth activate-service-account --key-file=gcpsrvaccountkey.json
-gcloud config set project $GCP_PROJECT_ID
+gcloud config set project $GCP_PROJECT_ID --quiet
 
 # Set the ACCOUNT_ID and the region to work with our desired region
 export GCP_REGION=us-east1
