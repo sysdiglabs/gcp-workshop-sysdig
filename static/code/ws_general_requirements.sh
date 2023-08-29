@@ -12,7 +12,7 @@ fi
 
 # Install jq command-line tool for parsing JSON, and bash-completion
 sudo apt-get update
-sudo apt-get -y install jq gettext bash-completion moreutils
+sudo apt-get -y install jq gettext bash-completion moreutils terraform
 
 # Install docker
 curl -sSL https://get.docker.com/ | sudo sh
