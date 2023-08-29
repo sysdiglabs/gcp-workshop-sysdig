@@ -27,15 +27,16 @@ done
 # ToDo: Remove existing credentials if needed
 
 # Authenticate gcloud CLI
-gcloud auth login
-gcloud config set project gcp-sysdig-workshop
+# gcloud auth login # <- Not required as the prerequisite is to have a service-account initialized
+gcloud auth activate-service-account --project=$GCP_PROJECT_ID --key-file=gcpsrvaccountkey.json
+gcloud auth activate-service-account --key-file=gcpsrvaccountkey.json
+gcloud config set project $GCP_PROJECT_ID
 
 # Set the ACCOUNT_ID and the region to work with our desired region
 export GCP_REGION=us-east1
 gcloud config set compute/region ${GCP_REGION}
 
 # Configure .bash_profile
-export GCP_PROJECT_ID=$(gcloud config get-value project)
 echo "export GCP_PROJECT_ID=$GCP_PROJECT_ID" | tee -a ~/.bash_profile
 echo "export GCP_PROJECT_NUMBER=$(gcloud projects describe $GCP_PROJECT_ID --format='value(projectNumber)')"
 echo "export GCP_REGION=$GCP_REGION" | tee -a ~/.bash_profile

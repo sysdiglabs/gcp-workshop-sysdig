@@ -1,8 +1,8 @@
 1. GCP account: Create 'gcp-sysdig-workshop' project and a service-account 
-2. Upload json key and init gcloud service account
+2. Initialize a system var mamed GCP_PROJECT_ID with the name of the project (i.e. gcp-workshop-sysdig)
     ``
-    gcloud auth activate-service-account --project=gcp-sysdig-workshop --key-file=gcpcmdlineuser.json
-    gcloud auth activate-service-account --key-file=gcpcmdlineuser.json
+    export GCP_PROJECT_ID="gcp-project-name"
     ``
-3. Launch ws_general_requirements.sh
-4. Launch create_gke.sh
+3. Upload json key and rename it to gcpsrvaccountkey.json). File must be into the same folder as the scripts
+4. Launch ws_general_requirements.sh
+5. Launch create_gke.sh
