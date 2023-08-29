@@ -23,6 +23,7 @@ fi
 sed -ie 's/n1-standard-1/n1-standard-4/g' gke.tf
 # change machine types for first instance type as well as the region
 sed -ie 's/us-central1/us-east1/g' terraform.tfvars
+sed -ie 's/REPLACE_ME/${GCP_PROJECT_ID}/g' terraform.tfvars
 # comment out terraform-cloud to set local terraform
 sed -ie '6,10 s/^/#/' terraform.tf 
 
