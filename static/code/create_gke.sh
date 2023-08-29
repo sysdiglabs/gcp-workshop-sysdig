@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # install kubectl 1.27
-curl -O curl -LO https://dl.k8s.io/release/v1.27.0/bin/linux/arm64/kubectl
+curl -LO https://dl.k8s.io/release/v1.28.1/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 mkdir -p $HOME/bin && mv ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
 
 # download and deploy GKE cluster from Hashicorp demo https://github.com/hashicorp/learn-terraform-provision-gke-cluster
 # git clone https://github.com/hashicorp/learn-terraform-provision-gke-cluster
-cd learn-terraform-provision-gke-cluster
+cd learn-terraform-provision-gke-cluster/
 
 # find out or define gcp project id
 if [[ -z "${GCP_PROJECT_ID}" ]]; then
