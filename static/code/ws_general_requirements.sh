@@ -10,13 +10,12 @@ else
   rm ./install.sh
 fi
 
-# Update gcloud-docker
-gcloud components update
-gcloud components install  docker-credential-gcr
-
 # Install jq command-line tool for parsing JSON, and bash-completion
 sudo apt-get update
-sudo apt-get -y install jq gettext bash-completion moreutils docker-ce docker-ce-cli
+sudo apt-get -y install jq gettext bash-completion moreutils
+
+# Install docker
+curl -sSL https://get.docker.com/ | sudo sh
 
 # install helm
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
@@ -35,6 +34,7 @@ done
 gcloud auth activate-service-account --project=$GCP_PROJECT_ID --key-file=gcpsrvaccountkey.json
 gcloud auth activate-service-account --key-file=gcpsrvaccountkey.json
 gcloud config set project $GCP_PROJECT_ID --quiet
+gcloud auth configure-docker --quiet
 
 # Set the ACCOUNT_ID and the region to work with our desired region
 export GCP_REGION=us-east1
@@ -54,10 +54,10 @@ gcloud services enable \
   containerscanning.googleapis.com
 
 # GCR Registry for module 2, create repository
-export GCR_NAME=gcp-sysdig-workshop
+export WORKSHOP_NAME=gcp-sysdig-workshop
 
 declare -a repositories
-repositories=( "$GCR_NAME" "mysql" "postgres" "redis" )
+repositories=("mysql" "postgres" "redis" )
 
 for repo in ${repositories[@]}; do
     gcloud artifacts repositories create ${repo} --repository-format=docker \
@@ -70,18 +70,21 @@ done
 gcloud auth configure-docker $GCP_REGION-docker.pkg.dev
 
 # populate Registry
-repositories=( \
+repoimages=( \
     "mysql:5.7" \
     "postgres:13" \
     "redis:6" \
 )
 
-for repo_src in ${repositories[@]}; do
+for i in "${!repoimages[@]}"; do
 
-    docker pull ${repo_src}
+    docker pull ${repoimages[i]}
 
-    repo_dest=${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${repo_src} 
-    docker tag ${repo_src} ${repo_dest}
+    #wrong  docker push us-east1-docker.pkg.dev/mateo-burillo-ns/mysql:5.7
+    #ok     docker push us-docker.pkg.dev/mateo-burillo-ns/manu-test-snyk/nginx:latest
+
+    repo_dest=${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${repositories[i]}/${repoimages[i]}
+    docker tag ${repoimages[i]} ${repo_dest}
     docker push ${repo_dest}
 done
 
