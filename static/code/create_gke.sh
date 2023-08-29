@@ -7,7 +7,7 @@ mkdir -p $HOME/bin && mv ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/
 
 # download and deploy GKE cluster from Hashicorp demo https://github.com/hashicorp/learn-terraform-provision-gke-cluster
 # git clone https://github.com/hashicorp/learn-terraform-provision-gke-cluster
-cd learn-terraform-provision-gke-cluster/
+cd terraform-provision-gke-cluster/
 
 # find out or define gcp project id
 if [[ -z "${GCP_PROJECT_ID}" ]]; then
