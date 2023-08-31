@@ -44,6 +44,8 @@ resource "google_container_node_pool" "primary_nodes" {
       "https://www.googleapis.com/auth/monitoring",
     ]
 
+    disk_size_gb = 25
+
     labels = {
       env = var.gcp_project_id
     }
