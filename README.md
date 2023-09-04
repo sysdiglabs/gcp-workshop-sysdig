@@ -27,7 +27,7 @@ Automations are located in the folder `static/code`
 
 Content is located in the folder `content`
 
-- [ ] Introduction
+- [x] Introduction
 - [ ] Install
   - [ ] Cloud
   - [ ] GKE
