@@ -18,13 +18,17 @@ gcloud config set project $TF_VAR_gcp_project_id --quiet
 # download and deploy GKE cluster from Hashicorp demo https://github.com/hashicorp/learn-terraform-provision-gke-cluster
 # git clone https://github.com/hashicorp/learn-terraform-provision-gke-cluster
 echo "Set and update terraform script"
-cd terraform-provision-gke-cluster/
+cd learn-terraform-provision-gke-cluster/
 
 # patch tf files
 # change machine type
-sed -ie 's/n1-standard-1/n1-standard-4/g' gke.tf
-# change machine types for first instance type as well as the region
-sed -ie 's/us-central1/us-east1/g' terraform.tfvars
+sed -ie 's/n1-standard-1"/n1-standard-4"\n    disk_size_gb=25\n/g' gke.tf
+# Specify disk size
+sed 's/node_config/&\ndisk_size_gb=25/' gke.tf
+
+
+# change region
+sed -ie "s/us-central1/${TF_VAR_gcp_region}/g" terraform.tfvars
 sed -ie "s/REPLACE_ME/${TF_VAR_gcp_project_id}/g" terraform.tfvars
 # comment out terraform-cloud to set local terraform
 sed -ie '6,10 s/^/#/' terraform.tf 
