@@ -14,9 +14,6 @@
     ``
     export TF_VAR_project_id="gcp-workshop-project"
     export TF_VAR_region="us-central1" # We are using a zone instead of a region in this case
-
-    export TF_VAR_gcp_project_id="gcp-workshop-project"
-    export TF_VAR_gcp_region="us-central1" # We are using a zone instead of a region in this case
     ``
 
 4. Upload json key and rename it to srvaccountkey.json. File must be into the same folder as the scripts
