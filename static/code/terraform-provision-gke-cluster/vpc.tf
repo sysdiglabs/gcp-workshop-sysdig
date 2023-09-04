@@ -1,17 +1,9 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
 
-variable "project_id" {
-  description = "project id"
-}
-
-variable "region" {
-  description = "region"
-}
-
 provider "google" {
-  project = var.project_id
-  region  = var.region
+  project = var.gcp_project_id
+  region  = var.gcp_zone
 }
 
 # VPC

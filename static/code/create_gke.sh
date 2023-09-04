@@ -10,6 +10,7 @@ mkdir -p $HOME/bin && mv ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/
 echo "GCloud auth"
 gcloud auth activate-service-account --project=$TF_VAR_gcp_project_id --key-file=srvaccountkey.json
 gcloud auth activate-service-account --key-file=srvaccountkey.json
+gcloud auth login --cred-file=srvaccountkey.json --quiet
 echo "GCloud set project"
 gcloud config set project $TF_VAR_gcp_project_id --quiet
 #gcloud auth application-default login --scopes openid,https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/iam --quiet

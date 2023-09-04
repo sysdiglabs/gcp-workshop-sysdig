@@ -8,11 +8,13 @@
     Service Account User
     Service Usage Admin
 
-3. Initialize a system var mamed TF_GCP_PROJECT_ID and TF_GCP_REGION (i.e. gcp-workshop-sysdig)
+3. (Important. If you are using a Google VM, stop it, go to EDIT > "Access Scopes" and activate "Allow full access to all Cloud APIs")
+
+    Initialize a system var mamed TF_GCP_PROJECT_ID and TF_GCP_REGION (i.e. gcp-workshop-sysdig)
     ``
     export TF_VAR_gcp_project_id="gcp-workshop-project"
     export TF_VAR_gcp_region="us-central1"
-    export TF_VAR_zone="['us-central1-b']"
+    export TF_VAR_gcp_zone="us-central1-b"
     ``
 
 4. Upload json key and rename it to srvaccountkey.json. File must be into the same folder as the scripts
