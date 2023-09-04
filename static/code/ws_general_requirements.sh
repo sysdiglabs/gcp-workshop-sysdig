@@ -10,9 +10,10 @@ else
   rm ./install.sh
 fi
 
-#Add terraform repository
-wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+# Add terraform repository
+wget -O- -q https://apt.releases.hashicorp.com/gpg | sudo gpg --batch --yes --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+
 
 # Install jq command-line tool for parsing JSON, and bash-completion
 sudo apt-get update
@@ -35,19 +36,23 @@ done
 
 # Authenticate gcloud CLI
 # gcloud auth login # <- Not required as the prerequisite is to have a service-account initialized
-gcloud auth activate-service-account --project=$GCP_PROJECT_ID --key-file=gcpsrvaccountkey.json
-gcloud auth activate-service-account --key-file=gcpsrvaccountkey.json
-gcloud config set project $GCP_PROJECT_ID --quiet
+echo "Setting ServiceAccount"
+gcloud auth activate-service-account --project=$TF_GCP_PROJECT_ID --key-file=srvaccountkey.json
+gcloud auth activate-service-account --key-file=srvaccountkey.json
+gcloud config set project $TF_GCP_PROJECT_ID --quiet
+
+# Configure Docker
+echo "Configuring Docker"
 gcloud auth configure-docker --quiet
+sudo groupadd docker && sudo gpasswd -a ${USER} docker && sudo systemctl restart docker
 
 # Set the ACCOUNT_ID and the region to work with our desired region
-export GCP_REGION=us-east1
-gcloud config set compute/region ${GCP_REGION}
+gcloud config set compute/region ${TF_GCP_REGION}
 
 # Configure .bash_profile
-echo "export GCP_PROJECT_ID=$GCP_PROJECT_ID" | tee -a ~/.bash_profile
-echo "export GCP_PROJECT_NUMBER=$(gcloud projects describe $GCP_PROJECT_ID --format='value(projectNumber)')"
-echo "export GCP_REGION=$GCP_REGION" | tee -a ~/.bash_profile
+echo "export GCP_PROJECT_ID=$TF_GCP_PROJECT_ID" | tee -a ~/.bash_profile
+echo "export GCP_PROJECT_NUMBER=$(gcloud projects describe $TF_GCP_PROJECT_ID --format='value(projectNumber)')"
+echo "export GCP_REGION=$TF_GCP_REGION" | tee -a ~/.bash_profile
 
 # Enable Google Services
 gcloud services enable \
@@ -57,21 +62,19 @@ gcloud services enable \
   containerregistry.googleapis.com \
   containerscanning.googleapis.com
 
-# GCR Registry for module 2, create repository
-export WORKSHOP_NAME=gcp-sysdig-workshop
-
 declare -a repositories
 repositories=("mysql" "postgres" "redis" )
 
 for repo in ${repositories[@]}; do
     gcloud artifacts repositories create ${repo} --repository-format=docker \
-    --location=$GCP_REGION \
+    --location=$TF_GCP_REGION \
     --description="Docker repository for Sysdig Workshop"
 done
 
 # auth CLI with registry
 # configure auth
-gcloud auth configure-docker $GCP_REGION-docker.pkg.dev
+echo "Authenticating docker"
+gcloud auth configure-docker $TF_GCP_REGION-docker.pkg.dev --quiet
 
 # populate Registry
 repoimages=( \
@@ -87,7 +90,7 @@ for i in "${!repoimages[@]}"; do
     #wrong  docker push us-east1-docker.pkg.dev/mateo-burillo-ns/mysql:5.7
     #ok     docker push us-docker.pkg.dev/mateo-burillo-ns/manu-test-snyk/nginx:latest
 
-    repo_dest=${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${repositories[i]}/${repoimages[i]}
+    repo_dest=${TF_GCP_REGION}-docker.pkg.dev/${TF_GCP_PROJECT_ID}/${repositories[i]}/${repoimages[i]}
     docker tag ${repoimages[i]} ${repo_dest}
     docker push ${repo_dest}
 done
