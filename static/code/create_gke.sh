@@ -8,10 +8,10 @@ mkdir -p $HOME/bin && mv ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/
 
 # Set gcloud scope
 echo "GCloud auth"
-gcloud auth activate-service-account --project=$TF_GCP_PROJECT_ID --key-file=srvaccountkey.json
+gcloud auth activate-service-account --project=$TF_gcp_project_id --key-file=srvaccountkey.json
 gcloud auth activate-service-account --key-file=srvaccountkey.json
 echo "GCloud set project"
-gcloud config set project $TF_GCP_PROJECT_ID --quiet
+gcloud config set project $TF_gcp_project_id --quiet
 #gcloud auth application-default login --scopes openid,https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/iam --quiet
 
 # download and deploy GKE cluster from Hashicorp demo https://github.com/hashicorp/learn-terraform-provision-gke-cluster
@@ -24,7 +24,7 @@ cd terraform-provision-gke-cluster/
 sed -ie 's/n1-standard-1/n1-standard-4/g' gke.tf
 # change machine types for first instance type as well as the region
 sed -ie 's/us-central1/us-east1/g' terraform.tfvars
-sed -ie "s/REPLACE_ME/${TF_GCP_PROJECT_ID}/g" terraform.tfvars
+sed -ie "s/REPLACE_ME/${TF_gcp_project_id}/g" terraform.tfvars
 # comment out terraform-cloud to set local terraform
 sed -ie '6,10 s/^/#/' terraform.tf 
 
