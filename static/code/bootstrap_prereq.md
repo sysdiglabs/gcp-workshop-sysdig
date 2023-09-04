@@ -10,8 +10,9 @@
 
 3. Initialize a system var mamed TF_GCP_PROJECT_ID and TF_GCP_REGION (i.e. gcp-workshop-sysdig)
     ``
-    export TF_gcp_project_id="gcp-workshop-project"
-    export TF_gcp_region="us-central1"
+    export TF_VAR_gcp_project_id="gcp-workshop-project"
+    export TF_VAR_gcp_region="us-central1"
+    export TF_VAR_zone="['us-central1-b']"
     ``
 
 4. Upload json key and rename it to srvaccountkey.json. File must be into the same folder as the scripts

@@ -37,9 +37,9 @@ done
 # Authenticate gcloud CLI
 # gcloud auth login # <- Not required as the prerequisite is to have a service-account initialized
 echo "Setting ServiceAccount"
-gcloud auth activate-service-account --project=$TF_gcp_project_id --key-file=srvaccountkey.json
+gcloud auth activate-service-account --project=$TF_VAR_gcp_project_id --key-file=srvaccountkey.json
 gcloud auth activate-service-account --key-file=srvaccountkey.json
-gcloud config set project $TF_gcp_project_id --quiet
+gcloud config set project $TF_VAR_gcp_project_id --quiet
 
 # Configure Docker
 echo "Configuring Docker"
@@ -47,12 +47,12 @@ gcloud auth configure-docker --quiet
 sudo groupadd docker && sudo gpasswd -a ${USER} docker && sudo systemctl restart docker
 
 # Set the ACCOUNT_ID and the region to work with our desired region
-gcloud config set compute/region ${TF_gcp_region}
+gcloud config set compute/region ${TF_VAR_gcp_region}
 
 # Configure .bash_profile
-echo "export GCP_PROJECT_ID=$TF_gcp_project_id" | tee -a ~/.bash_profile
-echo "export GCP_PROJECT_NUMBER=$(gcloud projects describe $TF_gcp_project_id --format='value(projectNumber)')"
-echo "export GCP_REGION=$TF_gcp_region" | tee -a ~/.bash_profile
+echo "export GCP_PROJECT_ID=$TF_VAR_gcp_project_id" | tee -a ~/.bash_profile
+echo "export GCP_PROJECT_NUMBER=$(gcloud projects describe $TF_VAR_gcp_project_id --format='value(projectNumber)')"
+echo "export GCP_REGION=$TF_VAR_gcp_region" | tee -a ~/.bash_profile
 
 # Enable Google Services
 gcloud services enable \
@@ -67,14 +67,14 @@ repositories=("mysql" "postgres" "redis" )
 
 for repo in ${repositories[@]}; do
     gcloud artifacts repositories create ${repo} --repository-format=docker \
-    --location=$TF_gcp_region \
+    --location=$TF_VAR_gcp_region \
     --description="Docker repository for Sysdig Workshop"
 done
 
 # auth CLI with registry
 # configure auth
 echo "Authenticating docker"
-gcloud auth configure-docker $TF_gcp_region-docker.pkg.dev --quiet
+gcloud auth configure-docker $TF_VAR_gcp_region-docker.pkg.dev --quiet
 
 # populate Registry
 repoimages=( \
@@ -90,7 +90,7 @@ for i in "${!repoimages[@]}"; do
     #wrong  docker push us-east1-docker.pkg.dev/mateo-burillo-ns/mysql:5.7
     #ok     docker push us-docker.pkg.dev/mateo-burillo-ns/manu-test-snyk/nginx:latest
 
-    repo_dest=${TF_gcp_region}-docker.pkg.dev/${TF_gcp_project_id}/${repositories[i]}/${repoimages[i]}
+    repo_dest=${TF_VAR_gcp_region}-docker.pkg.dev/${TF_VAR_gcp_project_id}/${repositories[i]}/${repoimages[i]}
     docker tag ${repoimages[i]} ${repo_dest}
     docker push ${repo_dest}
 done
