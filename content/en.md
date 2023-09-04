@@ -3,16 +3,46 @@
 ## CE070
 
 ## Introduction<!--## makes table of contents-->
-Duration: 90 minutes
+Duration: 90 minutes  
+Oriented to DevOps Engineers, SREs, Platform Engineers, Security Architects.
+
+### Key Challenges of Securing the cloud
+New cloud approaches and cloud-native applications using container technologies have introduced a new set of challenges in terms of security. Traditional solutions are inadequate for handling this environment complexity and new abstractions. Securing cloud-native applications and infrastructure is not easy, even for professionals.
+
+Some interesting facts described on [Sysdig Global Cloud Threat Report](https://sysdig.com/press-releases/2023-cloud-threat-report/)
+* **10 Minutes to pain**. Cloud attackers are quick and opportunistic, spending only 10 minutes to initiate an attack.
+* **A 90% safe supply chain isn't safe enough**. 10% of advanced supply chain threats are invisible to standard tools.
+* **72% of containers live less than five minutes**. Gathering information after a container is done is not effective.
+* **87% of Container Images have high risk vulnerabilities**. And several new vulnerabilities are discovered every day.
+
+Companies around the world have to deal with complexity:
+* Scale. Large volumes of dynamic cloud assets, configurations and permissions.
+* Microservices, distributed infrastructure, CICD pipelines. 
+* Multiple teams (Devs, DevOps, Security). 
 
 ### What you'll learn
-I'm Tom .  
-Using troubleshooting playbooks  
-Creating and exploring with log based metrics  
-Using Log Analytics 
+Understand Sysdig's unique security approach and its **unified Platform**.
+* **Vulnerability Management**
+  * Detect, manage and remediate container and hosts vulnerabilities from CICD to run.
+  * Reduce noise dramatically thanks to Runtime Insights (in-use).
+* **Cloud Security Posture**
+  * Detect and fix misconfigurations and risks with CSPM, KSPM and CIEM features.
+  * Enforce Security Posture with Runtime Insights findings.
+* **Runtime Threat Detection**
+  * Falco basics.
+  * Cloud Threat Detection (Auditlog).
+  * GKE runtime threat detection.
 
+  
+<img src="img/intro/sysdig-cnapp.png" alt="b3f25899efc309f8.png"  width="624.00" />
 
 ## Setup
+
+### Sysdig
+
+TODO: Pending to generate accounts
+
+### Lab
 
 **Before you click the Start Lab button**
 
