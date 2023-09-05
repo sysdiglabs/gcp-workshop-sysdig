@@ -204,10 +204,13 @@ We will explain soon how to detect and respond to suspecting events.
 
 ## Task 2: Vulnerability Management
 **From code to run with Sysdig**
-Sysdig provides coverage to the complete software lifecycle with continuous scanning for:
-- Local environments and CICD pipelines with Sysdig CLI
-- GCR Registies
+Sysdig secures the entire software lifecycle with continuous scanning, covering:
+- Dev images and [CICD pipelines](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/integrate-with-cicd-tools/) with Sysdig CLI
+- [Image Registies](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/integrate-with-container-registries/)  like GAR (formerly GCR) or any Docker V2 registries)
+- Host packages
 - Runtime container images
+
+In this section we will test GCR 
 
  ## Task 3: Runtime Threat Detection and Response
 ==Lorem ipsum==
@@ -221,23 +224,7 @@ Sysdig provides coverage to the complete software lifecycle with continuous scan
  ==Lorem ipsum==
 
  ## Task 4: Posture Management
- 1. In the Cloud Console, return to the workloads page. On the Navigation menu (In the Cloud Console, on the **Navigation menu** ( <img src="img/8c24be286e75dbe7.png" alt="Navigation menu icon"  width="15.00" />), click **Kubernetes Engine** &gt; **Workloads**.), click Kubernetes Engine &gt; Workloads.
- 2. Select the 'frontend' workload
- 3. On the deployment details page, select the 'Container Logs' link to enter into the Logs Explorer. Notice that this keeps all the prior context and loads the logs for the specific deployment.
- Enter the following Log Query:
-
- ```
- resource.type="k8s_container"
-resource.labels.location="us-west1"
-resource.labels.cluster_name="my-cluster-usa-1"
-resource.labels.namespace_name="frontend"
-labels.k8s-pod/app="frontend"
-jsonPayload."http.req.path":"/product/" AND jsonPayload.message = "serving product page"
- ```
-
- 4.  Select 'Create Metric' to create a logs based metric based on the above search query, saving the metric as a 'Counter' type.
- 5. Explore this metric in the Metrics Explorer
- 6. While in the metrics explorer, select the 'Code:PromQL' button to see this command converted to PromQL automatically.
+==Lorem ipsum==
 
 ## Exploring logs with Log Analytics
 1. Enable Log Analytics on your default bucket
