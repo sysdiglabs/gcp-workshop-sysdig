@@ -13,6 +13,10 @@ Read static/code/bootstrap_prereq.md
 
 Automations are located in the folder `static/code`
 
+#### Sysdig
+- [ ] Generate Sysdig accounts and assign to attendees
+
+#### General 
 - [x] Dependencies (jq gettext bash-completion moreutils)
 - [x] gcloud CLI + delete previous credentials (in case) + configure credentials
 - [x] kubectl
@@ -26,16 +30,3 @@ Automations are located in the folder `static/code`
 ## Content
 
 Content is located in the folder `content`
-
-- [x] Introduction
-- [ ] Install
-  - [ ] Cloud
-  - [ ] GKE
-  - [ ] GCR
-- Runtime threat detection
-  - [ ] Cloud
-  - [ ] GKE
-- Vulnerability management
-  - [ ] GKE Runtime insights
-  - [ ] GCR scan
-
