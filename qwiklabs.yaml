@@ -1,0 +1,46 @@
+schema_version: 2
+default_locale: en
+title: A hands-on introduction to Sysdig
+description: "This lab teaches the basics of Google Cloud Operations Suite by using
+  the GCP Jumpstart for an Ecommerce website on GCP: https://github.com/GoogleCloudPlatform/terraform-ecommerce-microservices-on-gke/tree/sic-jss\r\n"
+instruction:
+  type: md
+  uri: instructions/en.md
+duration: 600
+max_duration: 600
+credits: 0
+level: introductory
+tags:
+- ce070
+- sysdig
+- tmatter
+- ein
+resources: []
+environment:
+  resources:
+  - type: gcp_project
+    variant: gcpd
+    id: project_0
+    startup_script:
+      type: qwiklabs
+      path: Archive
+    ssh_key_user: user_0
+    allowed_locations:
+    - europe-west1
+    - us-central1
+    - us-west1
+  - type: gcp_user
+    id: user_0
+    permissions:
+    - project: project_0
+      roles:
+      - roles/owner
+  student_visible_outputs:
+  - label: Open Console
+    reference: project_0.console_url
+  - label: Username
+    reference: user_0.username
+  - label: Password
+    reference: user_0.password
+  - label: Project ID
+    reference: project_0.project_id

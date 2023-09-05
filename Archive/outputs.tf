@@ -2,12 +2,17 @@
 # SPDX-License-Identifier: MPL-2.0
 
 output "region" {
-  value       = var.region
+  value       = var.gcp_region
   description = "GCloud Region"
 }
 
+output "zone" {
+  value       = var.gcp_zone
+  description = "GCloud Zone"
+}
+
 output "project_id" {
-  value       = var.project_id
+  value       = var.gcp_project_id
   description = "GCloud Project ID"
 }
 
