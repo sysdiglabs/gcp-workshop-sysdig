@@ -10,20 +10,16 @@
 
 3. (Important. If you are using a Google VM, stop it, go to EDIT > "Access Scopes" and activate "Allow full access to all Cloud APIs")
 
-    Initialize a system var mamed TF_GCP_PROJECT_ID and TF_GCP_REGION (i.e. gcp-workshop-sysdig)
+    Initialize a system vars:
     ``
-    export TF_VAR_project_id="gcp-workshop-project"
-    export TF_VAR_region="us-central1" # We are using a zone instead of a region in this case
+    export TF_VAR_gcp_project_id="gcp-workshop-project"
+    export TF_VAR_gcp_region="us-central1" # We are using a zone instead of a region in this case
+    TF_VAR_gcp_zone="us-central1-a
     ``
 
 4. Upload json key and rename it to srvaccountkey.json. File must be into the same folder as the scripts
 
-5. Launch general requirements
-    ``
-    bash ws_general_requirements.sh
-    ``
-
-6. Launch gke creator
-    ``
-    bash create_gke.sh
-    ``
+5. Execute terraform script
+``
+terraform init & terraform apply --auto-approve
+`` 
