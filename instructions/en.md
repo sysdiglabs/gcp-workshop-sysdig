@@ -1,10 +1,13 @@
 # A hands-on introduction to Sysdig
 
-## CE070
+###### CE070
 
 ## Introduction<!--## makes table of contents-->
 Duration: 90 minutes  
 Oriented to DevOps Engineers, SREs, Platform Engineers, Security Architects.
+
+gcp-and-sysdig.png
+<img src="img/intro/gcp-and-sysdig.png" alt="b3f25899efc309f8.png"  width="800" />
 
 ### Key Challenges of Securing the cloud
 New cloud approaches and cloud-native applications using container technologies have introduced a new set of challenges in terms of security. Traditional solutions are inadequate for handling this environment complexity and new abstractions. Securing cloud-native applications and infrastructure is not easy, even for professionals.
@@ -207,10 +210,13 @@ We will explain soon how to detect and respond to suspecting events.
 Sysdig secures the entire software lifecycle with continuous scanning, covering:
 - Dev images and [CICD pipelines](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/integrate-with-cicd-tools/) with Sysdig CLI
 - [Image Registies](https://docs.sysdig.com/en/docs/sysdig-secure/scanning/integrate-with-container-registries/)  like GAR (formerly GCR) or any Docker V2 registries)
-- Host packages
-- Runtime container images
+- [Hosts](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/runtime/host-scanning/) (Virtual Machine Instances)
+- [Runtime container images](https://docs.sysdig.com/en/docs/sysdig-secure/vulnerabilities/runtime/) (Including Kubernetes pods)
 
-In this section we will test GCR 
+In this section we will learn about Registry Scanning, but you can play around with a Trial account and check what protecting other sections of the SDLC looks like.
+
+<img src="img/vuln-management/gcp-sysdig-vuln-mgt.png" alt="b3f25899efc309f8.png"  width="800" />
+
 
  ## Task 3: Runtime Threat Detection and Response
 ==Lorem ipsum==
