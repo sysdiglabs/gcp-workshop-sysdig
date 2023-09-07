@@ -57,6 +57,36 @@ resource "google_container_node_pool" "primary_nodes" {
   }
 }
 
+module "kubernetes-engine_auth" {
+  depends_on = [google_container_cluster.primary]
+  source  = "terraform-google-modules/kubernetes-engine/google//modules/auth"
+  version = "27.0.0"
+
+  project_id           = var.gcp_project_id
+  cluster_name         = google_container_cluster.primary.name
+  location             = google_container_cluster.primary.location
+  use_private_endpoint = true
+
+}
+
+resource "local_file" "kubeconfig" {
+  content  = module.kubernetes-engine_auth.kubeconfig_raw
+  filename = "kubeconfig"
+}
+
+resource "workloads" "deployments" {
+  depends_on = [google_container_cluster.primary]
+  provisioner "local-exec" {
+    #command = "echo ${self.private_ip} >> private_ips.txt"
+    command = "bash ws_general_requirements.sh"
+  }
+
+  provisioner "local-exec" {
+   command = "bash gke.sh"
+  }
+}
+
+
 
 # # Kubernetes provider
 # # The Terraform Kubernetes Provider configuration below is used as a learning reference only. 
