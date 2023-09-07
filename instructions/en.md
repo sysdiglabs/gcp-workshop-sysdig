@@ -6,13 +6,14 @@
 Duration: 90 minutes  
 Oriented to DevOps Engineers, SREs, Platform Engineers, Security Architects.
 
-gcp-and-sysdig.png
-<img src="img/intro/gcp-and-sysdig.png" alt="b3f25899efc309f8.png"  width="800" />
-
 ### Key Challenges of Securing the cloud
-New cloud approaches and cloud-native applications using container technologies have introduced a new set of challenges in terms of security. Traditional solutions are inadequate for handling this environment complexity and new abstractions. Securing cloud-native applications and infrastructure is not easy, even for professionals.
 
-Some interesting facts described on [Sysdig Global Cloud Threat Report](https://sysdig.com/press-releases/2023-cloud-threat-report/)
+<img src="img/intro/gcp-and-threats.png" alt="b3f25899efc309f8.png"  width="800" />
+
+New cloud approaches using container technologies have introduced a new set of challenges in terms of security. Traditional solutions are inadequate for handling this environment complexity and new abstractions. 
+Securing cloud-native applications and infrastructure is not easy, even for professionals.
+
+Some interesting facts about security described on [Sysdig Global Cloud Threat Report](https://sysdig.com/press-releases/2023-cloud-threat-report/)
 * **10 Minutes to pain**. Cloud attackers are quick and opportunistic, spending only 10 minutes to initiate an attack.
 * **A 90% safe supply chain isn't safe enough**. 10% of advanced supply chain threats are invisible to standard tools.
 * **72% of containers live less than five minutes**. Gathering information after a container is done is not effective.
@@ -22,6 +23,10 @@ Companies around the world have to deal with complexity:
 * Scale. Large volumes of dynamic cloud assets, configurations and permissions.
 * Microservices, distributed infrastructure, CICD pipelines. 
 * Multiple teams (Devs, DevOps, Security). 
+
+### Sysdig approach to security
+
+<img src="img/intro/gcp-and-sysdig.png" alt="b3f25899efc309f8.png"  width="800" />
 
 ### What you'll learn
 Understand Sysdig's unique security approach and its **unified Platform**.
@@ -38,13 +43,6 @@ Understand Sysdig's unique security approach and its **unified Platform**.
 
   
 <img src="img/intro/sysdig-cnapp.png" alt="b3f25899efc309f8.png"  width="800" />
-
-### Prerequisites
-
-Google Qwiklabs will take care of provisioning required accounts, infrastructure including clusters, terminal shell with bastion VM, etc. So all that you need is:
-
-  * A laptop/computer with internet access.
-  * Be eager to dig deeper on cloud security.
 
 ## Setup
 
@@ -231,7 +229,7 @@ Sysdig registry scan agent has to be hosted in a cluster, running as a cron job.
 
 <img src="img/vuln-management/registry-scan-diagram.png" alt="cluster driven vulnerability management for registries (agent based)"  width="800" />
 
-**Hands on**
+#### Hands on: Vulnerability scannig of GCR/ACR images
 
 As part of this lab, a set of images have been stored in a Google Artifact Registry. We want Sysdig Registry Scanner to scan all those images (and any new image) periodically in an automatic way.
 
@@ -291,26 +289,43 @@ If everything went as expected, you should see the registry name with a list of 
 
 <img src="img/vuln-management/registry-scan-screen.png" alt="Sysdig Registry Scan UI (sample)"  width="800" />
 
-More information about registry scanning can be found here https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-registry-scanner.
-
 By browsing results (click any container image name and check its vulnerabilities, information, content... ), you can easily find out what findings are threatening and what to prioritize first. 
 
 As vulnerability management requires context, you cand filter vulenrabilities by useful flags like "exploitable", "has fix" or expand vulnerability information by clicking any of the findings (CVEs) from the list.
 
 <img src="img/vuln-management/registry-scan-screen-detail.png" alt="Sysdig Registry Scan UI detail (sample)"  width="800" />
 
- ## Task 3: Runtime Threat Detection and Response
+More information about registry scanning can be found here https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-registry-scanner.
+
+
+#### Hands on: Noise reduction with Runtime Insights (In-Use packages)
+
+==Pending to describe this section==
+==Pending to provision ephenmeral sysdig accounts==
+
+## Task 3: Runtime Threat Detection and Response
 ==Lorem ipsum==
 
- ### Cloud threat detection (agentless)
+### Cloud threat detection (agentless)
+
+<img src="img/threat-detection-cloud/gcp-sysdig-runtime-cloud.png" alt="Sysdig Registry Scan UI detail (sample)"  width="800" />
+
+#### Hands on: Detect suspicious events in your Cloud
+==Lorem ipsum==
+ GKE threat detection
+
+### GKE threat detection
 
 ==Lorem ipsum==
 
- ### GKE threat detection
+<img src="img/threat-detection-containers/gcp-sysdig-runtime-gke.png" alt="Sysdig Registry Scan UI detail (sample)"  width="800" />
 
- ==Lorem ipsum==
 
- ## Task 4: Posture Management
+#### Hands on: Detect suspicious events in your Kubernetes cluster
+==Lorem ipsum==
+
+
+## Task 4: Posture Management
 ==Lorem ipsum==
 
 ## Exploring logs with Log Analytics
