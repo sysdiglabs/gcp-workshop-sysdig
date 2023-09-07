@@ -233,6 +233,8 @@ Sysdig registry scan agent has to be hosted in a cluster, running as a cron job.
 
 **Hands on**
 
+As part of this lab, a set of images have been stored in a Google Artifact Registry. We want Sysdig Registry Scanner to scan all those images (and any new image) periodically in an automatic way.
+
 Installing the agent is as easy as executing a helm command, but we need to configure a *service account* first so that our agent can access to registry images.  
 
 A *service account* has been created for that purpose. Let's generate a JSON token 
@@ -261,14 +263,41 @@ helm upgrade --install registry-scanner sysdig/registry-scanner \
     --namespace sysdig-agent
 ```
 
-Lets check that the agent is installed and working
+Scans are scheduled via cron job, every Saturday at 6:00 am, but as we attached the parameter ```--set scanOnStart.enabled=true```, a first scan will be triggered right after the installation finishes.
 
-...
-...
+Let's check that the scanner is doing its duty. *Kubectl get jobs* will help to see the status of the task.
 
+```
+$ kubectl get jobs  -l app.kubernetes.io/instance=registry-scanner
+NAME                          COMPLETIONS   DURATION   AGE
+registry-scanner-start-test   0/1           30s        30s
+```
+
+And **kubectl logs** allows us to understand what happened.
+
+```
+$ kubectl logs  -l app.kubernetes.io/instance=registry-scanner
+...
+{"level":"info","component":"report-builder","message":"Total: N = Success: X + Failed: Y + Skipped: Z"}
+```
+
+As a final check **kubectl get pods** shows the final status (*Error* or *Completed*)
+
+```
+$ kubectl get pods -l app.kubernetes.io/instance=registry-scanner -ojsonpath --template='{.items[*].status.containerStatuses[*].state.terminated.reason}'
+```
+
+If everything went as expected, you should see the registry name with a list of scanned images on your *Sysdig > Vulnereabilities > Registries* screen.
+
+<img src="img/vuln-management/registry-scan-screen.png" alt="Sysdig Registry Scan UI (sample)"  width="800" />
 
 More information about registry scanning can be found here https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-registry-scanner.
 
+By browsing results (click any container image name and check its vulnerabilities, information, content... ), you can easily find out what findings are threatening and what to prioritize first. 
+
+As vulnerability management requires context, you cand filter vulenrabilities by useful flags like "exploitable", "has fix" or expand vulnerability information by clicking any of the findings (CVEs) from the list.
+
+<img src="img/vuln-management/registry-scan-screen-detail.png" alt="Sysdig Registry Scan UI detail (sample)"  width="800" />
 
  ## Task 3: Runtime Threat Detection and Response
 ==Lorem ipsum==
