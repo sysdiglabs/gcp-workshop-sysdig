@@ -1,6 +1,14 @@
 #!/bin/bash
 
-# Uninstall gcloud cli
+echo "-- Linux version:"
+cat /etc/os-release
+
+# Sudo installed? (debian)
+echo "-- Install sudo (Debian)"
+su -
+apt-get -y install sudo
+
+# Install gcloud cli
 if which gcloud >/dev/null; then
   echo "gcloud already installed"
 else
