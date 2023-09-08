@@ -73,7 +73,7 @@ resource "local_file" "kubeconfig" {
   content  = module.kubernetes-engine_auth.kubeconfig_raw
   filename = "kubeconfig"
 
-    provisioner "local-exec" {
+  provisioner "local-exec" {
     #command = "echo ${self.private_ip} >> private_ips.txt"
     command = "bash ws_general_requirements.sh"
   }
