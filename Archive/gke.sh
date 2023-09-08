@@ -16,7 +16,7 @@ gcloud config set project $TF_VAR_gcp_project_id --quiet
 
 # configure kubectl
 # gcloud container clusteres get-credentials gkeworkshopk8s --region $TF_VAR_region
-gcloud container clusters get-credentials $(terraform output -raw kubernetes_cluster_name) --region $(terraform output -raw region)
+gcloud container clusters get-credentials $(terraform output kubernetes_cluster_name) --region $(terraform output region)
 
 # Kubectl shell completion
 cat << EOF > /root/.kube/completion.bash.inc
@@ -28,6 +28,9 @@ EOF
 
 echo 'source /root/.kube/completion.bash.inc' >> /root/.bashrc
 
+# Move kubeconfig to .kube folder
+mv 
+
 # falco event generator 
 helm repo add falcosecurity https://falcosecurity.github.io/charts
 helm repo update
@@ -38,5 +41,5 @@ helm upgrade --install event-generator falcosecurity/event-generator \
   --set config.loop=true \
   --set config.sleep=1m
 
-#Kubectl deploy event-generator
+# Kubectl deploy event-generator
  k create deployment playground --image=sysdiglabs/security-playground
