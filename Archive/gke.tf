@@ -75,12 +75,12 @@ resource "local_file" "kubeconfig" {
 
   provisioner "local-exec" {
     #command = "echo ${self.private_ip} >> private_ips.txt"
-    command = <<EOT
-      "./bash ws_general_requirements.sh"
-      "./bash gke.sh"
-    EOT
+    command = "bash ws_general_requirements.sh"
   }
 
+  provisioner "local-exec" {
+   command = "bash gke.sh"
+  }
 }
 
 
