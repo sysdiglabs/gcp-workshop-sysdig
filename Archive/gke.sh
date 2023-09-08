@@ -1,22 +1,24 @@
 #!/bin/bash
 
 # install kubectl 1.27
-echo "Install kubectl"
+echo "-- Install kubectl"
 sudo apt-get update
 sudo apt-get -y install kubectl google-cloud-sdk-gke-gcloud-auth-plugin
 
 # Set gcloud scope
-echo "GCloud auth"
+echo "-- GCloud auth"
 gcloud auth activate-service-account --project=$TF_VAR_gcp_project_id --key-file=srvaccountkey.json
 gcloud auth activate-service-account --key-file=srvaccountkey.json
 gcloud auth login --cred-file=srvaccountkey.json --quiet
-echo "GCloud set project"
+echo "-- GCloud set project"
 gcloud config set project $TF_VAR_gcp_project_id --quiet
 #gcloud auth application-default login --scopes openid,https://www.googleapis.com/auth/cloud-platform,https://www.googleapis.com/auth/iam --quiet
 
 # configure kubectl
 # gcloud container clusteres get-credentials gkeworkshopk8s --region $TF_VAR_region
-gcloud container clusters get-credentials $(terraform output kubernetes_cluster_name) --region $(terraform output region)
+echo "-- GCloud Auth container clusters"
+k8sauthcmd="gcloud container clusters get-credentials $(terraform output kubernetes_cluster_name) --zone $(terraform output zone) --project $(terraform output project_id)"
+eval $k8sauthcmd
 
 # Kubectl shell completion
 cat << EOF > /root/.kube/completion.bash.inc
