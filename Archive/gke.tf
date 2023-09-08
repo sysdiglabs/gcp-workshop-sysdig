@@ -72,11 +72,8 @@ module "kubernetes-engine_auth" {
 resource "local_file" "kubeconfig" {
   content  = module.kubernetes-engine_auth.kubeconfig_raw
   filename = "kubeconfig"
-}
 
-resource "workloads" "deployments" {
-  depends_on = [google_container_cluster.primary]
-  provisioner "local-exec" {
+    provisioner "local-exec" {
     #command = "echo ${self.private_ip} >> private_ips.txt"
     command = "bash ws_general_requirements.sh"
   }
@@ -85,7 +82,6 @@ resource "workloads" "deployments" {
    command = "bash gke.sh"
   }
 }
-
 
 
 # # Kubernetes provider
