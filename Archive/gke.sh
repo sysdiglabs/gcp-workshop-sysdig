@@ -4,7 +4,7 @@
 echo "Install kubectl"
 curl -LO https://dl.k8s.io/release/v1.28.1/bin/linux/amd64/kubectl
 chmod +x ./kubectl
-mkdir -p $HOME/bin && mv ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+mkdir -p $HOME/bin && mv ./kubectl $HOME/.local/bin/kubectl && export PATH=$PATH:$HOME/.local/bin
 
 # Instsall gcloud component for kubectl
 sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
