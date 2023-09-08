@@ -229,11 +229,15 @@ Sysdig registry scan agent has to be hosted in a cluster, running as a cron job.
 
 <img src="img/vuln-management/registry-scan-diagram.png" alt="cluster driven vulnerability management for registries (agent based)"  width="800" />
 
+Vulnerability Scanning is essential to detect and remediate software vulnerabilities, but things are a bit more complex when working at scale. Real companies have to deal with thousands of detections, and the question is: what findings should be prioritized first and why? 
+
+**Sysdig Runtime Insights** performs a continuous profiling of  workloads, flagging packages that are loaded at runtime and thus, distinguishing them from packages that were inserted at build time but are never invoked.
+
 #### Hands on: Vulnerability scannig of GCR/ACR images
 
 As part of this lab, a set of images have been stored in a Google Artifact Registry. We want Sysdig Registry Scanner to scan all those images (and any new image) periodically in an automatic way.
 
-Installing the agent is as easy as executing a helm command, but we need to configure a *service account* first so that our agent can access to registry images.  
+Installing Sysdig scanning agent is as easy as executing a helm command, but we need to configure a *service account* first so that our agent can access to registry images.  
 
 A *service account* has been created for that purpose. Let's generate a JSON token 
 
@@ -297,28 +301,62 @@ As vulnerability management requires context, you cand filter vulenrabilities by
 
 More information about registry scanning can be found here https://docs.sysdig.com/en/docs/installation/sysdig-secure/install-registry-scanner.
 
-
 #### Hands on: Noise reduction with Runtime Insights (In-Use packages)
 
-==Pending to describe this section==
-==Pending to provision ephenmeral sysdig accounts==
+Previous exercise consisted of analyzing static binary files (we can use Sysdig Admission Controller and OPA rules to prevent some of them to be deployed). But Sysdig provides also continuous Runtime Scanning. Let's see how it works.
+
+Browse to **Vulnerabilities > Runtime**
+
+Eeach item of the list is a running container that is presented with its registry/image:tag url, version and asset where the workload is being executed (cluster or host).
+
+At the right is a summary of vulnerabilities coloured by severity, ad the InUse flagging based on Runtime Insights.
+
+<img src="img/vuln-management/vuln-runtime-insights-1.png" alt="Sysdig Runtime Scan UI detail (sample)"  width="800" />
+
+Click one of the images to see its details screen. If we navigate to the *Vulnerabilities* tab and activate the *InUse* filter, the list will be dramatically reduced. If we add a filter with "Critical" and "High" severities, the resultset will be reduced even more. 
+
+This is the list of high severity and in use packages from that image that we need to prioritize. This is real noise reduction based on dynamic feedback.
+
+<img src="img/vuln-management/vuln-runtime-insights-2.png" alt="Sysdig Runtime Scan UI detail (sample)"  width="800" />
 
 ## Task 3: Runtime Threat Detection and Response
 ==Lorem ipsum==
 
 ### Cloud threat detection (agentless)
 
-<img src="img/threat-detection-cloud/gcp-sysdig-runtime-cloud.png" alt="Sysdig Registry Scan UI detail (sample)"  width="800" />
+==Lorem impsum==
 
 #### Hands on: Detect suspicious events in your Cloud
 ==Lorem ipsum==
+
  GKE threat detection
 
 ### GKE threat detection
 
-==Lorem ipsum==
+Sysdig Threat detection for Hosts and Kubernetes can capture, evaluate and respond to any suspicious event. 
 
 <img src="img/threat-detection-containers/gcp-sysdig-runtime-gke.png" alt="Sysdig Registry Scan UI detail (sample)"  width="800" />
+
+Runtime detection in Sysdig is builit on top of Falco. Runtime policies are collections of Falco rules. Let's go to *Policies > Runtime Policies* and **activate** the policy *Suspicious Container Activity* (click on the Policy first to review and understand what rules are included and how are they configured).
+
+<img src="img/threat-detection-containers/sysdig-runtime-policies.png" alt="Sysdig Runtime Threat Detection"  width="800" />
+
+This policy contains a rule called *"Terminal Shell into container"* that will capture any event related with that not-so-good practice.
+
+Let's go to the terminal and launch a terminal shell into a running pod.
+
+```
+kubectl get po --n default
+>> (Copy any pod name from the output)
+kubectl exec -it -n default <pod-name-abcdef> -- sh 
+$ 
+```
+
+Go to the *Insights > Kubernetes Activity* screen and voila! there is the suspicious terminal shell that our security team can trace and investigate now.  
+
+Please note that automatic actions can be preconfigured like, for instance, auto-killing the container when the event is detected.
+
+<img src="img/threat-detection-containers/sysdig-ui-insights-kubernetes.png" alt="Sysdig Runtime Threat Detection"  width="800" />
 
 
 #### Hands on: Detect suspicious events in your Kubernetes cluster
