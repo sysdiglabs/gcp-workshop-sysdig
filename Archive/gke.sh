@@ -2,12 +2,8 @@
 
 # install kubectl 1.27
 echo "Install kubectl"
-curl -LO https://dl.k8s.io/release/v1.28.1/bin/linux/amd64/kubectl
-chmod +x ./kubectl
-mkdir -p $HOME/.local && mkdir -p $HOME/.local/bin && mv ./kubectl $HOME/.local/bin/kubectl && export PATH=$PATH:$HOME/.local/bin
-
-# Instsall gcloud component for kubectl
-sudo apt-get install google-cloud-sdk-gke-gcloud-auth-plugin
+sudo apt-get update
+sudo apt-get -y install kubectl google-cloud-sdk-gke-gcloud-auth-plugin
 
 # Set gcloud scope
 echo "GCloud auth"
@@ -40,4 +36,7 @@ helm upgrade --install event-generator falcosecurity/event-generator \
   --namespace event-generator \
   --create-namespace \
   --set config.loop=true \
-  --set config.actions=""
+  --set config.sleep=1m
+
+#Kubectl deploy event-generator
+ k create deployment playground --image=sysdiglabs/security-playground
