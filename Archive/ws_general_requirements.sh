@@ -10,14 +10,9 @@ else
   rm ./install.sh
 fi
 
-# Add terraform repository
-wget -O- -q https://apt.releases.hashicorp.com/gpg | sudo gpg --batch --yes --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-
-
 # Install jq command-line tool for parsing JSON, and bash-completion
 sudo apt-get update
-sudo apt-get -y install jq gettext bash-completion moreutils terraform
+sudo apt-get -y install jq gettext bash-completion moreutils 
 
 # Install docker
 curl -sSL https://get.docker.com/ | sudo sh
@@ -50,7 +45,7 @@ sudo groupadd docker && sudo gpasswd -a ${USER} docker && sudo systemctl restart
 gcloud config set compute/region ${TF_VAR_gcp_region}
 
 # Configure .bash_profile
-echo "export GCP_PROJECT_ID=$TF_VAR_project_id" | tee -a ~/.bash_profile
+echo "export GCP_PROJECT_ID=$TF_VAR_gcp_project_id" | tee -a ~/.bash_profile
 echo "export GCP_PROJECT_NUMBER=$(gcloud projects describe $TF_VAR_gcp_project_id --format='value(projectNumber)')"
 echo "export GCP_REGION=$TF_VAR_gcp_region" | tee -a ~/.bash_profile
 
@@ -90,7 +85,7 @@ for i in "${!repoimages[@]}"; do
     #wrong  docker push us-east1-docker.pkg.dev/mateo-burillo-ns/mysql:5.7
     #ok     docker push us-docker.pkg.dev/mateo-burillo-ns/manu-test-snyk/nginx:latest
 
-    repo_dest=${TF_VAR_region}-docker.pkg.dev/${TF_VAR_gcp_project_id}/${repositories[i]}/${repoimages[i]}
+    repo_dest=${TF_VAR_gcp_region}-docker.pkg.dev/${TF_VAR_gcp_project_id}/${repositories[i]}/${repoimages[i]}
     docker tag ${repoimages[i]} ${repo_dest}
     docker push ${repo_dest}
 done
